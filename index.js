@@ -9,6 +9,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var last = 'rabbit:c60abea5-07b0-4bbc-b8db-6831c4f451fb:b4fc5f81-0e0a-48fa-bb61-f9970b1a64e1';
+// remember to update the Auth token!
 var options = {
 	url:'https://api.adobe.io/events/organizations/16749/integrations/57159/5729eaea-3569-45d1-816f-4401df2f0a10',
 	headers:{
@@ -62,7 +63,7 @@ function journaling() {
 				console.log(searchTerm + " " + last);			
 			}
 		else if (response.statusCode == '204') {
-			// io.emit('chat message', 'got a 204 - make a search and wait', 'https://tse4.mm.bing.net/th?id=OIP.QNeFPQ8_8G41KhxSvD2DlAHaDq&pid=Api');
+			io.emit('chat message', 'got a 204 - make a search and wait', 'https://tse4.mm.bing.net/th?id=OIP.QNeFPQ8_8G41KhxSvD2DlAHaDq&pid=Api');
 			console.log(response);
 
 		}
@@ -75,6 +76,7 @@ function journaling() {
 
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
+  	console.log('the connection worked')
     setInterval(journaling, 10000);
     // io.emit('chat message', 'something different');
   });
